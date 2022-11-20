@@ -35,7 +35,6 @@ export async function getAllPosts(): Promise<WordpressPostQueryReturnType> {
                     date
                     title
                     slug
-                    content
                     featuredImage {
                       node {
                         mediaItemUrl
