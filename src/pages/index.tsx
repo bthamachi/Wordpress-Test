@@ -8,8 +8,8 @@ type HomeProps = {
 const Home = ({ posts }: HomeProps) => {
   return (
     <>
-      {posts.map((item) => {
-        return <p>{item.title}</p>;
+      {posts.map((item, index) => {
+        return <p key={index}>{item.title}</p>;
       })}
     </>
   );
