@@ -26,7 +26,9 @@ const Home = ({ posts, categories }: HomeProps) => {
           <div className="grid grid-cols-1">
             {posts &&
               posts.slice(1, 4).map((post) => {
-                return <ArticleCard post={post} hideDate={false} />;
+                return (
+                  <ArticleCard key={post.title} post={post} hideDate={false} />
+                );
               })}
           </div>
         </div>
@@ -36,7 +38,7 @@ const Home = ({ posts, categories }: HomeProps) => {
           {posts &&
             posts.slice(4, 8).map((post) => {
               return (
-                <div>
+                <div key={post.title}>
                   <ArticleCard post={post} hideDate={true} />
                 </div>
               );
