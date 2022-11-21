@@ -1,4 +1,5 @@
 import { ReactNode } from "react";
+import Footer from "../components/Footer";
 import Header from "../components/Header";
 
 type GenericProps = {
@@ -11,6 +12,7 @@ const Generic = ({ children, categories }: GenericProps) => {
     <>
       <Header categories={categories} />
       {children}
+      <Footer categories={categories} />
     </>
   );
 };

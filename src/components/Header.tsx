@@ -3,7 +3,9 @@ import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { Fragment } from "react";
 import { blogPosts } from "../mocks/wp";
+
 import { CategoryNode } from "../types/wp";
+
 import HeaderBlogPostsCard from "./HeaderBlogPostsCard";
 import HeaderLink from "./HeaderLink";
 import MobileLink from "./MobileLink";
@@ -41,7 +43,7 @@ const Header = ({ categories }: HeaderProps) => {
               style={{
                 color: "#1192c1",
               }}
-              className="inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"
+              className="inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none"
             >
               <span className="sr-only">Open menu</span>
               <Bars3Icon className="h-6 w-6" aria-hidden="true" />
@@ -61,7 +63,7 @@ const Header = ({ categories }: HeaderProps) => {
                       }}
                       className={classNames(
                         open ? "text-gray-900" : "text-gray-500",
-                        "group inline-flex w-full items-center rounded-md  text-base font-medium hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                        "group inline-flex w-full items-center rounded-md  text-base font-medium hover:text-gray-900 focus:outline-none"
                       )}
                     >
                       <span>What Hurts</span>
@@ -140,7 +142,7 @@ const Header = ({ categories }: HeaderProps) => {
               <div className="flex items-center justify-between">
                 <div className="h-8"></div>
                 <div className="-mr-2">
-                  <Popover.Button className="inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500">
+                  <Popover.Button className="inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 ">
                     <span className="sr-only">Close menu</span>
                     <XMarkIcon
                       style={{
@@ -164,9 +166,7 @@ const Header = ({ categories }: HeaderProps) => {
                     <MobileLink href="/newsletter" name="Newsletter" />
                     <Disclosure>
                       <Disclosure.Button className=" flex items-center">
-                        <p className="flex items-center rounded-lg">
-                          What Hurts?
-                        </p>
+                        <p className="flex items-center ">What Hurts?</p>
                         <ChevronDownIcon
                           className={classNames(
                             "",

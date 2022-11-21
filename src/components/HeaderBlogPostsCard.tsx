@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { BlogPostPreview } from "../types/wp";
 import BlogPostCard from "./BlogPostCard";
 
@@ -19,10 +20,12 @@ const HeaderBlogPostsCard = ({ blogposts }: HeaderBlogPostCardProps) => {
         </ul>
       </div>
       <div className="mt-6 text-sm font-medium">
-        <a href="#" className="text-indigo-600 hover:text-indigo-500">
-          View all posts
-          <span aria-hidden="true"> &rarr;</span>
-        </a>
+        <Link href="/">
+          <span className="text-indigo-600 hover:text-indigo-500">
+            View all posts
+            <span aria-hidden="true"> &rarr;</span>
+          </span>
+        </Link>
       </div>
     </div>
   );
