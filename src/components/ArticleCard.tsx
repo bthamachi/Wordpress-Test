@@ -12,7 +12,12 @@ const ArticleCard = ({
 }: ArticleCardProp) => {
   return (
     <div className="grid cursor-pointer grid-cols-4 gap-x-3">
-      <img className="col-span-1  h-32 w-40 object-cover" src={featuredImage} />
+      {featuredImage && (
+        <img
+          className="col-span-1  h-32 w-40 object-cover"
+          src={featuredImage}
+        />
+      )}
       <div className="col-span-3 ">
         <p className="text-2xl text-base font-bold">{title}</p>
         {hideDate ? null : (
