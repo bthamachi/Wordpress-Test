@@ -1,4 +1,10 @@
-import { WordpressPostQueryReturnType } from "../types/wp";
+import {
+  CategoryNode,
+  WordpressCategoryReturnType,
+  WordpressPostQueryReturnType,
+} from "../types/wp";
+
+export const INVALID_CATEGORIES = ["About", "Lower Leg"];
 
 export async function fetchAPI(query: string, variables: any = {}) {
   // Set up some headers to tell the fetch call
@@ -24,26 +30,57 @@ export async function fetchAPI(query: string, variables: any = {}) {
   return json.data;
 }
 
-export async function getAllPosts(): Promise<WordpressPostQueryReturnType> {
+export function filterCategories(categoryList: CategoryNode[]): CategoryNode[] {
+  return categoryList.filter((item) => {
+    return !INVALID_CATEGORIES.includes(item.name);
+  });
+}
+
+export async function getAllCategories(): Promise<WordpressCategoryReturnType> {
   const data = await fetchAPI(
     `
-        query AllPosts {
-            posts(where: { orderby: { field: DATE, order: DESC}}) {
-              edges {
+    query{
+      categories{
+        edges{
+          node {
+            name
+          }
+        }
+      }
+    }
+    `
+  );
+  return data?.categories;
+}
+
+export async function getAllPosts(): Promise<WordpressPostQueryReturnType> {
+  // TODO: Refactor this into a pagination call
+  const data = await fetchAPI(
+    `
+      query AllPosts {
+        posts(first:3, where: {orderby: {field: DATE, order: DESC}}) {
+          edges {
+            node {
+              id
+              date
+              title
+              slug
+              categories {
+                edges {
+                  node {
+                    name
+                  }
+                }
+              }
+              featuredImage {
                 node {
-                    id
-                    date
-                    title
-                    slug
-                    featuredImage {
-                      node {
-                        mediaItemUrl
-                      }
-                    }
+                  mediaItemUrl
                 }
               }
             }
           }
+        }
+      }
         `
   );
 
