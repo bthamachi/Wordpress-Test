@@ -58,17 +58,27 @@ export async function getAllPosts(): Promise<WordpressPostQueryReturnType> {
   const data = await fetchAPI(
     `
       query AllPosts {
-        posts(first:3, where: {orderby: {field: DATE, order: DESC}}) {
+        posts(first:10, where: {orderby: {field: DATE, order: DESC}}) {
           edges {
             node {
               id
               date
               title
               slug
+              excerpt
+              content
               categories {
                 edges {
                   node {
                     name
+                  }
+                }
+              }
+              author{
+                node{
+                  name
+                  avatar{
+                   url 
                   }
                 }
               }

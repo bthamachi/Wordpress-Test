@@ -1,4 +1,4 @@
-export type WordpressPost = {
+export type WordpressPostResponseObject = {
   id: string;
   date: string;
   featuredImage: null | {
@@ -6,8 +6,17 @@ export type WordpressPost = {
       mediaItemUrl: string;
     };
   };
+  content: string;
   title: string;
   slug: DataTransferItemList;
+  author: {
+    node: {
+      name: string;
+      avatar: {
+        url: string;
+      };
+    };
+  };
   categories: {
     edges: {
       node: {
@@ -17,9 +26,21 @@ export type WordpressPost = {
   };
 };
 
+export type WordpressPost = {
+  id: string;
+  date: string;
+  title: string;
+  slug: string;
+  featuredImage: string | null;
+  categories: string[];
+  authorName: string;
+  authorImg: string;
+  description: string;
+};
+
 export type WordpressPostQueryReturnType = {
   edges: {
-    node: WordpressPost;
+    node: WordpressPostResponseObject;
   }[];
 };
 
