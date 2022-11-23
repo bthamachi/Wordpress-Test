@@ -26,7 +26,7 @@ const Blog = ({
         <div className="mt-10 flex flex-wrap overflow-hidden">
           <div className="w-full overflow-hidden md:w-4/6 lg:w-4/6 xl:w-4/6">
             <div className="ml-2 mr-2 md:mr-4">
-              <div className="grid grid-cols-12 gap-y-8">
+              <div className="grid grid-cols-12 gap-y-8 md:gap-x-8">
                 {posts.slice(0, paginationLimit).map((post, index) => {
                   return (
                     <ArticleCard
