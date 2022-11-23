@@ -1,6 +1,5 @@
 import { useRouter } from "next/router";
 import PageTitle from "../../../components/PageTitle";
-import SectionTitle from "../../../components/SectionTitle";
 import Blog from "../../../componentsV2/Blog";
 import Generic from "../../../Layouts/Generic";
 import { CategoryNode, WordpressPost } from "../../../types/wp";
@@ -29,14 +28,17 @@ const Category = ({
   popularPosts,
 }: CategoryPageProps) => {
   const router = useRouter();
-  const categoryName = router.query.categoryName as string;
+  const categorySlug = router.query.categoryName as string;
+  const categoryName = categories.find((item) => item.slug === categorySlug)
+    ?.name as string;
   return (
     <>
       <Generic posts={posts} categories={categories}>
         <PageTitle text={capitalizeFirstLetter(categoryName)} />
-        <SectionTitle
-          text={`Currently viewing articles that have been tagged with ${categoryName}`}
-        />
+        <p className="text-md mt-3 text-gray-700 sm:mt-4">
+          Currently viewing articles that have been tagged as{" "}
+          <span className="ml-1 underline">{categoryName}</span>
+        </p>
         <Blog
           categories={categories}
           posts={posts}
