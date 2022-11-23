@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { generateCategoryLinkFromSlug } from "../utils/wp";
 
 type HeaderLinkProps = {
   name: string;
@@ -7,7 +8,7 @@ type HeaderLinkProps = {
 
 const HeaderLink = ({ name, href }: HeaderLinkProps) => {
   return (
-    <Link href={href}>
+    <Link href={generateCategoryLinkFromSlug(href)}>
       <p
         style={{
           color: "#1192c1",

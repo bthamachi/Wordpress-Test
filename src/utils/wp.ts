@@ -75,6 +75,10 @@ export const filterPostsByCategorySlug = (
   );
 };
 
+export const generateCategoryLinkFromSlug = (slug: string) => {
+  return `/category/what-hurts/${encodeURIComponent(slug)}`;
+};
+
 export const cleanCategory = (
   categories: WordpressCategoryReturnType
 ): CategoryNode[] => {

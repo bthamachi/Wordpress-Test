@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { CategoryNode, WordpressPost } from "../types/wp";
+import { generateCategoryLinkFromSlug } from "../utils/wp";
 import ArticleCard from "./ArticleCard";
 import ArticleColumnCard from "./ArticleColumnCard";
 
@@ -18,9 +19,7 @@ const Blog = ({
   categories,
   limit = true,
 }: BlogProps) => {
-  const paginationLimit = limit
-    ? Math.min(7, posts.length - 1)
-    : posts.length - 1;
+  const paginationLimit = limit ? Math.min(7, posts.length) : posts.length;
   return (
     <section className="w-full bg-white">
       <div className="mx-auto max-w-7xl xl:px-0">
@@ -102,9 +101,7 @@ const Blog = ({
                       <li key={name}>
                         <Link
                           className="flex"
-                          href={`/category/what-hurts/${encodeURIComponent(
-                            categorySlug.slug
-                          )}`}
+                          href={generateCategoryLinkFromSlug(categorySlug.slug)}
                         >
                           <p className="block flex-1 py-2 font-serif text-lg font-thin text-gray-900 hover:underline">
                             {name}

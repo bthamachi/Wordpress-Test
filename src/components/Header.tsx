@@ -1,9 +1,11 @@
 import { Disclosure, Popover, Transition } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
+import Link from "next/link";
 import { Fragment } from "react";
 
 import { CategoryNode, WordpressPost } from "../types/wp";
+import { generateCategoryLinkFromSlug } from "../utils/wp";
 
 import HeaderBlogPostsCard from "./HeaderBlogPostsCard";
 import HeaderLink from "./HeaderLink";
@@ -103,11 +105,15 @@ const Header = ({ categories, posts }: HeaderProps) => {
                                   </h3>
                                   <div className="mt-5 ml-2 grid grid-cols-2	gap-y-4">
                                     {categories.map((item) => (
-                                      <HeaderLink
-                                        key={item.name}
-                                        name={item.name}
-                                        href={item.name}
-                                      />
+                                      <Link
+                                        href={generateCategoryLinkFromSlug(
+                                          item.slug
+                                        )}
+                                      >
+                                        <Popover.Button className="group col-span-1 inline-flex w-full items-center rounded-md text-base font-medium hover:cursor-pointer hover:text-gray-900 hover:underline focus:outline-none ">
+                                          <p>{item.name}</p>
+                                        </Popover.Button>
+                                      </Link>
                                     ))}
                                   </div>
                                 </div>

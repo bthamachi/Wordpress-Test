@@ -5,8 +5,8 @@ type ArticleCardProps = {
   mainPost: boolean;
 };
 
-const mainStyle = "relative block h-80 w-full overflow-hidden rounded-xl";
-const nonMainStyle = "mb-3 block h-48 overflow-hidden rounded-sm";
+const mainStyle = "relative block h-80 w-full overflow-hidden ";
+const nonMainStyle = "mb-3 block h-48 overflow-hidden ";
 
 const mainDivStyle = "col-span-12";
 const nonMainDivStyle = "col-span-12 md:col-span-6";
@@ -45,7 +45,7 @@ const ArticleCard = ({ post, mainPost = false }: ArticleCardProps) => {
             <path
               strokeLinecap="round"
               strokeLinejoin="round"
-              stroke-width="2"
+              strokeWidth="2"
               d="M14 5l7 7m0 0l-7 7m7-7H3"
             ></path>
           </svg>
