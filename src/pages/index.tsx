@@ -1,109 +1,97 @@
-import ArticleCard from "../components/ArticleCard";
-import MainPostCard from "../components/MainPostCard";
-import PageTitle from "../components/PageTitle";
-import SectionTitle from "../components/SectionTitle";
+import Blog from "../componentsV2/Blog";
 import Generic from "../Layouts/Generic";
 import { CategoryNode, WordpressPost } from "../types/wp";
-import { filterCategories, getAllCategories, getAllPosts } from "../utils/wp";
+import { random_sample } from "../utils/arr";
+import {
+  cleanCategory,
+  getAllCategories,
+  getAllPosts,
+  getCategoryCounts,
+  sanitizePostData,
+} from "../utils/wp";
 
 type HomeProps = {
   posts: WordpressPost[];
   categories: CategoryNode[];
+  categoryCounts: { [key: string]: number };
+  popularPosts: WordpressPost[];
 };
 
-const Home = ({ posts, categories }: HomeProps) => {
+const Home = ({
+  posts,
+  categories,
+  categoryCounts,
+  popularPosts,
+}: HomeProps) => {
   return (
     <>
-      <Generic categories={categories}>
-        <div className="my-8 hidden md:block">
-          <PageTitle text="Articles" />
-          <SectionTitle text="Latest" />
-        </div>
-
-        <div className="w-full grid-cols-2 md:grid">
-          {/* We render the latest post with the main card */}
-          {posts && posts[0] && <MainPostCard post={posts[0]} />}
-          <div className="grid grid-cols-1">
-            {posts &&
-              posts.slice(1, 4).map((post) => {
-                return (
-                  <ArticleCard key={post.title} post={post} hideDate={false} />
-                );
-              })}
-          </div>
-        </div>
-
-        <SectionTitle text="Popular" />
-        <div className="mx-10 my-10 space-y-12 sm:grid sm:grid-cols-2 sm:gap-x-6 sm:gap-y-12 sm:space-y-0 lg:grid-cols-2 lg:gap-x-8">
-          {posts &&
-            posts.slice(4, 8).map((post) => {
-              return (
-                <div key={post.title}>
-                  <ArticleCard post={post} hideDate={true} />
-                </div>
-              );
-            })}
-        </div>
+      <Generic posts={posts} categories={categories}>
+        <Blog
+          posts={posts}
+          categoryCounts={categoryCounts}
+          popularPosts={popularPosts}
+          limit={true}
+          categories={categories}
+        />
       </Generic>
     </>
   );
 };
 
 export async function getStaticProps() {
+  //Get Raw Data
   const postData = await getAllPosts();
   const categoriesData = await getAllCategories();
-  const posts = postData.edges.map(
-    ({
-      node: {
-        id,
-        date,
-        title,
-        slug,
-        featuredImage,
-        categories,
-        author,
-        content,
-      },
-    }) => {
-      return {
-        id,
-        date,
-        title,
-        slug,
-        featuredImage: featuredImage?.node?.mediaItemUrl,
-        categories: categories
-          ? categories?.edges.map((item) => {
-              return item?.node?.name;
-            })
-          : [],
-        authorName: author?.node?.name,
-        authorImg: author?.node?.avatar?.url,
-        description:
-          content
-            .replace(/\/n/gm, "")
-            .replace(/<p>/gm, "")
-            .replace(/<\/p>/gm, "")
-            .replace(/<strong>/gm, "")
-            .replace(/<\/strong>/gm, "")
-            .slice(0, 100)
-            .trimEnd() + "...",
-      };
-    }
-  );
-  const categories = filterCategories(
-    categoriesData.edges.map(({ node: { name } }) => {
-      return {
-        name,
-      };
-    })
-  );
+
+  // Sanitize Data
+  const posts = sanitizePostData(postData);
+  const categories = cleanCategory(categoriesData);
+  const categoriesAsStrings = categories.map((item) => item.name);
+  const categoryCounts = getCategoryCounts(posts, categoriesAsStrings);
+
+  console.log(categories);
+
+  const popularPosts = random_sample(posts, 10);
 
   return {
     props: {
       posts,
       categories,
+      categoryCounts,
+      popularPosts,
     },
   };
 }
 
 export default Home;
+
+// {/* <Generic categories={categories}>
+//         <div className="my-8 hidden lg:block">
+//           <PageTitle text="Articles" />
+//           <SectionTitle text="Latest" />
+//         </div>
+//         {/* Smaller Mobile */}
+//         <div className="grid grid-cols-1 lg:hidden">
+//           <div className="md:mt-10">
+//             {posts && <MainPostCard post={posts[0]!} />}
+//             <RecentPublications
+//               posts={posts.slice(1, Math.min(posts.length, 4))}
+//             />
+//           </div>
+//         </div>
+
+//         {/* Laptop Look */}
+//         <div className="hidden w-full grid-cols-2 px-0 lg:grid lg:grid-cols-5">
+//           {/* We render the latest post with the main card */}
+
+//           {posts && posts[0] && <MainPostCard post={posts[0]} />}
+//           <div className="col-span-2 mt-10 grid grid-cols-1 gap-y-8 px-4 md:mt-0 md:px-0">
+//             {posts &&
+//               posts.slice(1, 4).map((post) => {
+//                 return (
+//                   <ArticleCard key={post.title} post={post} hideDate={false} />
+//                 );
+//               })}
+//           </div>
+//         </div>
+//       </Generic> */}

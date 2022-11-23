@@ -1,14 +1,16 @@
 export type WordpressPostResponseObject = {
   id: string;
   date: string;
-  featuredImage: null | {
-    node: {
-      mediaItemUrl: string;
-    };
-  };
+  featuredImage:
+    | undefined
+    | {
+        node: {
+          mediaItemUrl: string;
+        };
+      };
   content: string;
   title: string;
-  slug: DataTransferItemList;
+  slug: string;
   author: {
     node: {
       name: string;
@@ -21,6 +23,7 @@ export type WordpressPostResponseObject = {
     edges: {
       node: {
         name: string;
+        slug: string;
       };
     }[];
   };
@@ -31,8 +34,8 @@ export type WordpressPost = {
   date: string;
   title: string;
   slug: string;
-  featuredImage: string | null;
-  categories: string[];
+  featuredImage: string | undefined;
+  categories: CategoryNode[];
   authorName: string;
   authorImg: string;
   description: string;
@@ -44,15 +47,9 @@ export type WordpressPostQueryReturnType = {
   }[];
 };
 
-export type BlogPostPreview = {
-  slug: string;
-  description: string;
-  imageUrl: string;
-  name: string;
-};
-
 export type CategoryNode = {
   name: string;
+  slug: string;
 };
 
 export type WordpressCategoryReturnType = {
