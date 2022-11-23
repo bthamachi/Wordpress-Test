@@ -106,6 +106,7 @@ const Header = ({ categories, posts }: HeaderProps) => {
                                   <div className="mt-5 ml-2 grid grid-cols-2	gap-y-4">
                                     {categories.map((item) => (
                                       <Link
+                                        key={item.slug}
                                         href={generateCategoryLinkFromSlug(
                                           item.slug
                                         )}
@@ -180,7 +181,7 @@ const Header = ({ categories, posts }: HeaderProps) => {
                                 <MobileLink
                                   key={item.name}
                                   name={item.name}
-                                  href={item.name}
+                                  href={item.slug}
                                 />
                               ))}
                             </div>

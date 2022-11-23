@@ -34,11 +34,14 @@ const Category = ({
   return (
     <>
       <Generic posts={posts} categories={categories}>
-        <PageTitle text={capitalizeFirstLetter(categoryName)} />
-        <p className="text-md mt-3 text-gray-700 sm:mt-4">
-          Currently viewing articles that have been tagged as{" "}
-          <span className="ml-1 underline">{categoryName}</span>
-        </p>
+        <div className="mt-2 px-2">
+          <PageTitle text={capitalizeFirstLetter(categoryName)} />
+          <p className="text-md mt-3 text-gray-700 sm:mt-4">
+            Currently viewing articles that have been tagged as{" "}
+            <span className="ml-1 underline">{categoryName}</span>
+          </p>
+        </div>
+
         <Blog
           categories={categories}
           posts={posts}

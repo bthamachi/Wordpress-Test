@@ -1,3 +1,5 @@
+import { generateCategoryLinkFromSlug } from "../utils/wp";
+
 type MobileLinkProps = {
   href: string;
   name: string;
@@ -6,7 +8,7 @@ type MobileLinkProps = {
 const MobileLink = ({ href, name }: MobileLinkProps) => {
   return (
     <a
-      href={href}
+      href={generateCategoryLinkFromSlug(href)}
       className="-m-3 flex items-center rounded-lg p-3 hover:bg-gray-50"
     >
       <div className="text-base font-medium">{name}</div>

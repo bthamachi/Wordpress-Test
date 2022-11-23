@@ -28,7 +28,7 @@ const ArticleCard = ({ post, mainPost = false }: ArticleCardProps) => {
       <h2 className="mb-2 pt-3 pb-1 font-serif text-lg text-gray-900">
         <a href="#_">{title}</a>
       </h2>
-      <p className="mb-3 text-sm text-gray-800">
+      <p className="mb-3 text-justify text-sm text-gray-800">
         {description}
         <a
           href="#_"
