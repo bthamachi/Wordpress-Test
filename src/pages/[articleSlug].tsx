@@ -69,7 +69,10 @@ const Article = ({
                     />
                   </h1>
                 </div>
-                <div className="max-w-3xl">{parsedContent}</div>
+                <div
+                  className="max-w-3xl"
+                  dangerouslySetInnerHTML={{ __html: content }}
+                ></div>
               </div>
 
               <Sidebar

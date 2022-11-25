@@ -5,3 +5,10 @@
 .dark-bg {
   background-color: #000000;
 }
+
+@layer base {
+  ul,
+  ol {
+    list-style: revert;
+  }
+}
