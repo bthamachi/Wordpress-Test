@@ -8,8 +8,8 @@ type AuthorCardProps = {
 
 const AuthorCard = ({ name, imgUrl, date }: AuthorCardProps) => {
   return (
-    <div className="my-4 flex items-center">
-      <img className="h-16  rounded-full" src={imgUrl} />
+    <div className="text-md my-4 flex items-center">
+      <img className="h-12  rounded-full" src={imgUrl} />
       <div className="mx-4">
         <p className="font-bold text-gray-700">{name}</p>
         <p>{format(parseJSON(date), "MMM dd, yyyy")}</p>

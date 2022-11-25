@@ -3,6 +3,7 @@ import {
   WordpressCategoryReturnType,
   WordpressPost,
   WordpressPostQueryReturnType,
+  WordpressPostResponseObject,
 } from "../types/wp";
 
 export const INVALID_CATEGORIES = [
@@ -79,6 +80,10 @@ export const generateCategoryLinkFromSlug = (slug: string) => {
   return `/category/what-hurts/${encodeURIComponent(slug)}`;
 };
 
+export const generateArticleLinkFromSlug = (slug: string) => {
+  return `/${encodeURIComponent(slug)}`;
+};
+
 export const cleanCategory = (
   categories: WordpressCategoryReturnType
 ): CategoryNode[] => {
@@ -92,103 +97,52 @@ export const cleanCategory = (
   );
 };
 
+export const sanitizeSinglePost = (post: WordpressPostResponseObject) => {
+  const { id, date, title, slug, featuredImage, categories, author, content } =
+    post;
+
+  const description =
+    content
+      .replace(/\/n/gm, "")
+      .replace(/<p>/gm, "")
+      .replace(/<\/p>/gm, "")
+      .replace(/<strong>/gm, "")
+      .replace(/<\/strong>/gm, "")
+      .replace(/(<([^>]+)>)/gi, "")
+      .replace(/&#8217;/gm, "'")
+      .replace(/&#8220;/gm, '"')
+      .replace(/&#8221;/gm, '"')
+      .slice(0, 100)
+      .trimEnd() + "...";
+  const filteredCategories = filterCategories(
+    categories.edges.map(({ node: { name, slug } }) => {
+      return {
+        name,
+        slug,
+      };
+    })
+  );
+
+  return {
+    id,
+    date,
+    title,
+    slug,
+    featuredImage: featuredImage?.node?.mediaItemUrl,
+    categories: filteredCategories,
+    authorName: author?.node?.name,
+    authorImg: author?.node?.avatar?.url,
+    description,
+  };
+};
+
 export const sanitizePostData = (
   posts: WordpressPostQueryReturnType
 ): WordpressPost[] => {
-  return posts.edges.map(
-    ({
-      node: {
-        id,
-        date,
-        title,
-        slug,
-        featuredImage,
-        categories,
-        author,
-        content,
-      },
-    }) => {
-      const description =
-        content
-          .replace(/\/n/gm, "")
-          .replace(/<p>/gm, "")
-          .replace(/<\/p>/gm, "")
-          .replace(/<strong>/gm, "")
-          .replace(/<\/strong>/gm, "")
-          .replace(/(<([^>]+)>)/gi, "")
-          .replace(/&#8217;/gm, "'")
-          .replace(/&#8220;/gm, '"')
-          .replace(/&#8221;/gm, '"')
-          .slice(0, 100)
-          .trimEnd() + "...";
-      const filteredCategories = filterCategories(
-        categories.edges.map(({ node: { name, slug } }) => {
-          return {
-            name,
-            slug,
-          };
-        })
-      );
-
-      return {
-        id,
-        date,
-        title,
-        slug,
-        featuredImage: featuredImage?.node?.mediaItemUrl,
-        categories: filteredCategories,
-        authorName: author?.node?.name,
-        authorImg: author?.node?.avatar?.url,
-        description,
-      };
-    }
-  );
+  return posts.edges.map(({ node }) => {
+    return sanitizeSinglePost(node);
+  });
 };
-
-export async function getAllPosts(): Promise<WordpressPostQueryReturnType> {
-  // TODO: Refactor this into a pagination call
-  const data = await fetchAPI(
-    `
-      query AllPosts {
-        posts(first:100, where: {orderby: {field: DATE, order: DESC}}) {
-          edges {
-            node {
-              id
-              date
-              title
-              slug
-              excerpt
-              content
-              categories {
-                edges {
-                  node {
-                    name
-                    slug
-                  }
-                }
-              }
-              author{
-                node{
-                  name
-                  avatar{
-                   url 
-                  }
-                }
-              }
-              featuredImage {
-                node {
-                  mediaItemUrl
-                }
-              }
-            }
-          }
-        }
-      }
-        `
-  );
-
-  return data?.posts;
-}
 
 export const getCategoryCounts = (
   posts: WordpressPost[],

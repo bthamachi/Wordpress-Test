@@ -9,10 +9,10 @@ import {
   cleanCategory,
   filterPostsByCategorySlug,
   getAllCategories,
-  getAllPosts,
   getCategoryCounts,
   sanitizePostData,
 } from "../../../utils/wp";
+import { getAllPosts } from "../../../utils/wp-server";
 
 type CategoryPageProps = {
   posts: WordpressPost[];
@@ -31,6 +31,8 @@ const Category = ({
   const categorySlug = router.query.categoryName as string;
   const categoryName = categories.find((item) => item.slug === categorySlug)
     ?.name as string;
+
+  console.log(`categoryName : ${categoryName}`);
   return (
     <>
       <Generic posts={posts} categories={categories}>

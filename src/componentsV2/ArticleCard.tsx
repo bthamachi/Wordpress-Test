@@ -1,4 +1,6 @@
+import Link from "next/link";
 import { WordpressPost } from "../types/wp";
+import { generateArticleLinkFromSlug } from "../utils/wp";
 
 type ArticleCardProps = {
   post: WordpressPost;
@@ -15,41 +17,44 @@ const ArticleCard = ({ post, mainPost = false }: ArticleCardProps) => {
   const { title, description, featuredImage } = post;
   const imageStyling = mainPost ? mainStyle : nonMainStyle;
   const divStyling = mainPost ? mainDivStyle : nonMainDivStyle;
+  const postLink = generateArticleLinkFromSlug(post.slug);
 
   return (
     <div className={divStyling}>
-      <a href="#_" className={imageStyling}>
-        <img
-          className="h-full w-full scale-100 transform object-cover object-center transition duration-300 ease-out hover:scale-105"
-          src={featuredImage}
-          alt=""
-        />
-      </a>
+      <Link href={postLink}>
+        <div className={imageStyling}>
+          <img
+            className="h-full w-full scale-100 transform object-cover object-center transition duration-300 ease-out hover:scale-105"
+            src={featuredImage}
+            alt=""
+          />
+        </div>
+      </Link>
+
       <h2 className="mb-2 pt-3 pb-1 font-serif text-lg text-gray-900">
-        <a href="#_">{title}</a>
+        <Link href={postLink}>{title}</Link>
       </h2>
       <p className="mb-3 text-justify text-sm text-gray-800">
         {description}
-        <a
-          href="#_"
-          className="ml-1 inline inline-flex items-center text-xs text-gray-500 underline"
-        >
-          <span>Continue Reading</span>
-          <svg
-            className="ml-1 h-3 w-3 -rotate-45 transform"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M14 5l7 7m0 0l-7 7m7-7H3"
-            ></path>
-          </svg>
-        </a>
+        <Link href={postLink}>
+          <span className="ml-1 inline inline-flex items-center text-xs text-gray-500 underline">
+            Continue Reading
+            <svg
+              className="ml-1 h-3 w-3 -rotate-45 transform"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M14 5l7 7m0 0l-7 7m7-7H3"
+              ></path>
+            </svg>
+          </span>
+        </Link>
       </p>
     </div>
   );

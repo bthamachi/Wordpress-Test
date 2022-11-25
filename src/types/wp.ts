@@ -29,6 +29,10 @@ export type WordpressPostResponseObject = {
   };
 };
 
+export interface WordpressPostWithContent extends WordpressPost {
+  content: string;
+}
+
 export type WordpressPost = {
   id: string;
   date: string;
@@ -39,6 +43,11 @@ export type WordpressPost = {
   authorName: string;
   authorImg: string;
   description: string;
+};
+
+export type IdAndSlug = {
+  id: string;
+  slug: string;
 };
 
 export type WordpressPostQueryReturnType = {
