@@ -82,20 +82,12 @@ export async function getAllPosts(
     const prevWrite = new Date(json.cacheDate);
     const currTime = new Date();
 
-    const elapsedTime = currTime.getTime() - prevWrite.getTime();
-    const mins = Math.floor(elapsedTime / 60000);
-    const seconds = ((elapsedTime % 60000) / 1000).toFixed(0);
-    console.log(`Cache Age : ${mins}:${seconds}`);
-
     // 2 Minute Cache Timing
     if (cache && currTime.getTime() - prevWrite.getTime() < 60000 * 2) {
       return json.data;
     }
-
-    fs.unlinkSync(cachePath);
   }
 
-  // TODO: Refactor this into a pagination call
   const data = await fetchAPI(
     `
         query AllPosts {
@@ -138,7 +130,6 @@ export async function getAllPosts(
 
   const parsedJson = JSON.stringify({
     data: data.posts,
-    cacheDate: new Date().toISOString(),
   });
 
   fs.writeFileSync(cachePath, parsedJson);
