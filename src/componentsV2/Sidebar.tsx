@@ -53,7 +53,7 @@ const Sidebar = ({
         </div>
         <div className="mt-10">
           <h2 className="mb-5 text-lg font-medium text-gray-900">Categories</h2>
-          <ul>
+          <ul className="list-none">
             {Object.keys(categoryCounts).map((name) => {
               const categorySlug = categories.find((item) => item.name == name);
 
@@ -83,7 +83,7 @@ const Sidebar = ({
           <h2 className="mb-5 text-lg font-medium text-gray-900">
             Recent Posts
           </h2>
-          <ul>
+          <ul className="list-none">
             {popularPosts.slice(0, 3).map((post) => {
               return <ArticleColumnCard key={post.title} post={post} />;
             })}

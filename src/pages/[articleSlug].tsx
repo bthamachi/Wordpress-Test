@@ -7,6 +7,7 @@ import Generic from "../Layouts/Generic";
 import { CategoryNode, WordpressPost } from "../types/wp";
 import { random_sample } from "../utils/arr";
 import { replaceContent } from "../utils/content-parser";
+
 import {
   cleanCategory,
   getAllCategories,
@@ -39,15 +40,8 @@ const Article = ({
 }: ArticleProps) => {
   const router = useRouter();
   if (!content) {
-    console.log(
-      `ERROR: No content found. Props were ${router.query.articleSlug}`
-    );
     return null;
   }
-
-  const parsedContent = content
-    ? parse(content, { replace: replaceContent })
-    : null;
 
   return (
     <>
@@ -69,10 +63,10 @@ const Article = ({
                     />
                   </h1>
                 </div>
-                <div
-                  className="max-w-3xl"
-                  dangerouslySetInnerHTML={{ __html: content }}
-                ></div>
+                <div className="max-w-3xl">
+                  {parse(content, { replace: replaceContent })}
+                </div>
+                <div className="my-40"></div>
               </div>
 
               <Sidebar

@@ -31,9 +31,8 @@ export const replaceContent = (domNode: DOMNode) => {
   }
 
   // list styling
-  if (domNode.name == "ol") {
-    domNode.attribs["class"] = "list-decimal";
-    domNode.attribs["role"] = "list";
+  if (domNode.name == "ol" || domNode.name == "ul") {
+    domNode.attribs["class"] = "list-decimal reset-list-style";
   }
 
   return domNode;
