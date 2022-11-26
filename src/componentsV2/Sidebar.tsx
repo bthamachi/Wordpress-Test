@@ -15,7 +15,7 @@ const Sidebar = ({
   popularPosts,
 }: SidebarProps) => {
   return (
-    <div className="mt-12 w-full overflow-hidden md:mt-0 md:w-2/6 lg:w-2/6 xl:w-2/6">
+    <div className="mt-12 w-full overflow-hidden md:mt-0 lg:w-2/6 xl:w-2/6">
       <div className="ml-2 mr-2 md:ml-4">
         <div className="rounded-lg bg-gray-50 p-7">
           <div className="pb-6 text-left">

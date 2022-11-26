@@ -33,6 +33,7 @@ export const replaceContent = (domNode: DOMNode) => {
   // list styling
   if (domNode.name == "ol" || domNode.name == "ul") {
     domNode.attribs["class"] = "list-decimal reset-list-style";
+    domNode["attribs"]["style"] = "list-style:revert";
   }
 
   return domNode;

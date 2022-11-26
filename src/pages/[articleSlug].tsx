@@ -49,7 +49,7 @@ const Article = ({
         <section className="w-full bg-white">
           <div className="mx-auto max-w-7xl px-4 xl:px-0">
             <div className="mt-10 flex flex-wrap overflow-hidden">
-              <div className="w-full overflow-hidden pr-10 md:w-4/6 lg:w-4/6 xl:w-4/6">
+              <div className="w-full overflow-hidden pr-10 lg:w-4/6">
                 <Breadcrumbs categories={article.categories} />
                 <div className="mb-10 mt-8">
                   <h1>

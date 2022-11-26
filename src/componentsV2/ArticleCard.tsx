@@ -36,7 +36,7 @@ const ArticleCard = ({ post, mainPost = false }: ArticleCardProps) => {
       </h2>
       <p className="mb-3 text-justify text-sm text-gray-800">
         {description}
-        <Link href={postLink}>
+        <Link legacyBehavior={true} href={postLink}>
           <span className="ml-1 inline inline-flex items-center text-xs text-gray-500 underline">
             Continue Reading
             <svg

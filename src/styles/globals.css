@@ -5,16 +5,3 @@
 .dark-bg {
   background-color: #000000;
 }
-
-@layer base {
-  ol {
-    list-style: revert;
-  }
-  ul {
-    list-style: revert;
-  }
-}
-
-.reset-list-style {
-  list-style: revert;
-}
