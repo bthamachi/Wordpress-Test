@@ -1,4 +1,5 @@
 import { WordpressPost } from "../types/wp";
+import { generateArticleLinkFromSlug } from "../utils/wp";
 
 type BlogPostCardProps = {
   post: WordpressPost;
@@ -8,7 +9,7 @@ const BlogPostCard = ({ post }: BlogPostCardProps) => {
   return (
     <li key={post.slug} className="flow-root">
       <a
-        href={post.slug}
+        href={generateArticleLinkFromSlug(post.slug)}
         className="-m-3 flex rounded-lg p-3 hover:bg-gray-100"
       >
         <div className="hidden flex-shrink-0 sm:block">

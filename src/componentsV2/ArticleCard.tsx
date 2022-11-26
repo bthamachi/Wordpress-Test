@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { WordpressPost } from "../types/wp";
 import { generateArticleLinkFromSlug } from "../utils/wp";
 
@@ -21,7 +20,7 @@ const ArticleCard = ({ post, mainPost = false }: ArticleCardProps) => {
 
   return (
     <div className={divStyling}>
-      <Link href={postLink}>
+      <a href={postLink}>
         <div className={imageStyling}>
           <img
             className="h-full w-full scale-100 transform object-cover object-center transition duration-300 ease-out hover:scale-105"
@@ -29,14 +28,14 @@ const ArticleCard = ({ post, mainPost = false }: ArticleCardProps) => {
             alt=""
           />
         </div>
-      </Link>
+      </a>
 
       <h2 className="mb-2 pt-3 pb-1 font-serif text-lg text-gray-900">
-        <Link href={postLink}>{title}</Link>
+        <a href={postLink}>{title}</a>
       </h2>
       <p className="mb-3 text-justify text-sm text-gray-800">
         {description}
-        <Link legacyBehavior={true} href={postLink}>
+        <a href={postLink}>
           <span className="ml-1 inline inline-flex items-center text-xs text-gray-500 underline">
             Continue Reading
             <svg
@@ -54,7 +53,7 @@ const ArticleCard = ({ post, mainPost = false }: ArticleCardProps) => {
               ></path>
             </svg>
           </span>
-        </Link>
+        </a>
       </p>
     </div>
   );
